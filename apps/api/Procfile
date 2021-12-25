@@ -1,1 +1,1 @@
-web: bin/boot
+web: node dist/apps/api/main.js
