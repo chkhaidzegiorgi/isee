@@ -1,0 +1,11 @@
+{
+  "root": "dist/apps/fe/",
+  "routes": {
+    "/**/*.html": "index.html"
+  },
+  "proxies": {
+    "/api/": {
+      "origin": "https://isee-api.herokuapp.com/api/"
+    }
+  }
+}
