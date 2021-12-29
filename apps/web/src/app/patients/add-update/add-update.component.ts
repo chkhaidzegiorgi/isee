@@ -7,6 +7,7 @@ import {
 import { FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { catchError, Observable } from 'rxjs';
 import { PatientsService } from '../patients.service';
 import { AddUpdateFormBuilder } from './add-update.builder';
 
@@ -44,17 +45,24 @@ export class AddUpdateComponent implements OnInit {
 
   onSave(): void {
     const formValues = this.form.value;
-    let obs$: any;
+    let obs$: Observable<any>;
     if (this.id) {
       obs$ = this.service.modify(this.id, formValues);
     } else {
       obs$ = this.service.add(formValues);
     }
 
-    obs$.subscribe((x: any) => {
-      console.log(x);
-      this.router.navigate(['./']);
-      this.snakBack.open('მონაცემები წარმატებით შეინახა', 'დახურვა');
-    });
+    obs$
+      .subscribe(
+        (x: any) => {
+          console.log(x);
+          this.router.navigate(['./']);
+          this.snakBack.open('მონაცემები წარმატებით შეინახა', 'დახურვა');
+        },
+        (error) => {
+          this.snakBack.open('დაფისქირდა შეცდომა', 'დახურვა')
+          console.log(error);
+        }
+      )
   }
 }
