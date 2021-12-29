@@ -58,7 +58,8 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr
             mat-row
-            [routerLink]="['add-update/' + row.id]"
+            [routerLink]="['add-update']"
+            [queryParams]="{ id: row.id }"
             *matRowDef="let row; columns: displayedColumns"
           ></tr>
         </table>

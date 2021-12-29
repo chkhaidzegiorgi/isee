@@ -1,6 +1,7 @@
 {
   "root": "dist/apps/web/",
   "routes": {
+    "/assets/*": "/assets/",
     "/**": "index.html"
   },
   "proxies": {

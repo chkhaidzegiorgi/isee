@@ -9,7 +9,7 @@ const routes: Routes = [
     component: ListComponent,
   },
   {
-    path: 'add-update/:id',
+    path: 'add-update',
     component: AddUpdateComponent,
   },
 ];

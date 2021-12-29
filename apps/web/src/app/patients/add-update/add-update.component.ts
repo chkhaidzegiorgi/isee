@@ -30,7 +30,7 @@ export class AddUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const { id } = this.route.snapshot.params;
+    const { id } = this.route.snapshot.queryParams;
     if (id) {
       this.service.get(id).subscribe((patient) => {
         this.id = id;
