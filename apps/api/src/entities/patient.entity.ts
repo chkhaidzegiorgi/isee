@@ -24,10 +24,10 @@ export class PatientEntity {
   birthday: Date;
 
   @Column()
-  address: string;
+  address?: string;
 
   @Column()
-  disease: string;
+  disease?: string;
 
   @Column()
   branch: string;
@@ -39,5 +39,5 @@ export class PatientEntity {
   updated_at: Date;
 
   @Column()
-  updated_by: string;
+  updated_by?: string;
 }

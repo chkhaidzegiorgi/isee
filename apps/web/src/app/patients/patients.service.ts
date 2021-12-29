@@ -6,6 +6,7 @@ import { UrlQueryParams } from '../utils/UrlQueryParams';
 
 @Injectable()
 export class PatientsService {
+  api_url = 'api/patients';
   constructor(private httpClient: HttpClient) {}
 
   getList(
@@ -16,6 +17,20 @@ export class PatientsService {
       searchValue,
       ...paging,
     });
-    return this.httpClient.get<ListResult<Patient>>(`api/patients?${params}`);
+    return this.httpClient.get<ListResult<Patient>>(
+      `${this.api_url}?${params}`
+    );
+  }
+
+  get(id: string): Observable<any> {
+    return this.httpClient.get(`${this.api_url}/${id}`);
+  }
+
+  add(patient: any): Observable<any> {
+    return this.httpClient.post(this.api_url, patient);
+  }
+
+  modify(id: string, patient: any): Observable<any> {
+    return this.httpClient.put(`${this.api_url}/${id}`, patient);
   }
 }

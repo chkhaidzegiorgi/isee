@@ -1,0 +1,83 @@
+<mat-card>
+  <mat-card-content>
+    <div class="d-flex flex-wrap">
+      <mat-card-title>პაციენტის დამატება</mat-card-title>
+    </div>
+    <div>
+      <form *ngIf="form" [formGroup]="form">
+        <mat-form-field>
+          <mat-label>აირჩიეთ ფილიალი</mat-label>
+          <mat-select required="" formControlName="branch">
+            <mat-option [value]="'ოზურგეთი'"> ოზურგეთი </mat-option>
+            <mat-option [value]="'ბათუმი'"> ბათუმი </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            formControlName="firstname"
+            matInput
+            placeholder="სახელი"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            formControlName="lastname"
+            matInput
+            placeholder="გვარი"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            formControlName="birthday"
+            matInput
+            placeholder="დაბადების თარიღი"
+            [matDatepicker]="picker"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            formControlName="id_number"
+            matInput
+            placeholder="პირადი ნომერი"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="address" matInput placeholder="მისამართი" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <textarea
+            formControlName="disease"
+            matInput
+            placeholder="დაავადება"
+          ></textarea>
+        </mat-form-field>
+
+        <div>
+          <button
+            [disabled]="form.invalid"
+            (click)="onSave()"
+            mat-raised-button
+            color="accent"
+          >
+            შენახვა
+          </button>
+        </div>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>

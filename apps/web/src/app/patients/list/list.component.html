@@ -5,7 +5,12 @@
   <div fxFlex.gt-sm="100%">
     <mat-card>
       <mat-card-content>
-        <mat-card-title>პაციენტების სია</mat-card-title>
+        <div class="header">
+          <mat-card-title>პაციენტების სია</mat-card-title>
+          <button [routerLink]="['add-update']" mat-fab color="primary">
+            <mat-icon>note_add</mat-icon>
+          </button>
+        </div>
 
         <mat-form-field appearance="standard">
           <mat-label>ფილტრი</mat-label>
@@ -51,7 +56,11 @@
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr
+            mat-row
+            [routerLink]="['add-update/' + row.id]"
+            *matRowDef="let row; columns: displayedColumns"
+          ></tr>
         </table>
 
         <mat-paginator
