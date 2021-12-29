@@ -1,7 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('patients')
-export class Patient {
+export class PatientEntity {
   @PrimaryGeneratedColumn()
   id?: number;
 
@@ -10,4 +16,28 @@ export class Patient {
 
   @Column()
   lastname: string;
+
+  @Column({ unique: true, length: 13 })
+  id_number: string;
+
+  @Column({ type: 'timestamptz' })
+  birthday: Date;
+
+  @Column()
+  address: string;
+
+  @Column()
+  disease: string;
+
+  @Column()
+  branch: string;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
+
+  @Column()
+  updated_by: string;
 }

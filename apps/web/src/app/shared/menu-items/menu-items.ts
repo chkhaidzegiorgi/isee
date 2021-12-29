@@ -9,7 +9,7 @@ export interface Menu {
 }
 
 const MENUITEMS = [
-  { state: 'patients', name: 'Patients', type: 'link', icon: 'av_timer' },
+  { state: 'patients', name: 'პაციენტები', type: 'link', icon: 'av_timer' },
 ];
 
 @Injectable()

@@ -1,21 +1,42 @@
+import { ListResult, Paging } from '@isee/api-interfaces';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Patient } from '../entities/patient.entity';
+import { InsertResult, Like, Repository, UpdateResult } from 'typeorm';
+import { PatientEntity } from '../entities/patient.entity';
 
 @Injectable()
 export class PatientsService {
   constructor(
-    @InjectRepository(Patient)
-    private patientRepository: Repository<Patient>
+    @InjectRepository(PatientEntity)
+    private patientRepository: Repository<PatientEntity>
   ) {}
 
-  getPatients(): Promise<Patient[]> {
-    return this.patientRepository.find();
+  async getPatients(
+    searchValue: string,
+    page = 1,
+    take = 10
+  ): Promise<ListResult<PatientEntity>> {
+    const skip = (page - 1) * take;
+    const keyword = searchValue || '';
+
+    const [result, total] = await this.patientRepository.findAndCount({
+      where: { id_number: Like('%' + keyword + '%') },
+      order: { created_at: 'DESC' },
+      take: take,
+      skip: skip,
+    });
+
+    return {
+      records: result,
+      count: total,
+    };
   }
 
-  add(patient): Promise<Patient> {
-    this.patientRepository.insert(patient);
-    return patient;
+  async create(patient): Promise<InsertResult> {
+    return await this.patientRepository.insert(patient);
+  }
+
+  async modify(id, patient): Promise<UpdateResult> {
+    return await this.patientRepository.update(id, patient);
   }
 }

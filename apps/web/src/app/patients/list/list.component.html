@@ -5,44 +5,62 @@
   <div fxFlex.gt-sm="100%">
     <mat-card>
       <mat-card-content>
-        <mat-card-title>Basic list</mat-card-title>
+        <mat-card-title>პაციენტების სია</mat-card-title>
 
         <mat-form-field appearance="standard">
-          <mat-label>Filter</mat-label>
-          <input matInput placeholder="Ex. ium" #input />
+          <mat-label>ფილტრი</mat-label>
+          <input matInput placeholder="დაწერე ტექსტი" [formControl]="search" />
         </mat-form-field>
 
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <table mat-table [dataSource]="list" class="mat-elevation-z8">
           <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
 
-          <!-- Position Column -->
-          <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef>No.</th>
-            <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+          <ng-container matColumnDef="fullname">
+            <th mat-header-cell *matHeaderCellDef>სახელი გვარი</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.firstname + ' ' + element.lastname }}
+            </td>
           </ng-container>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          <ng-container matColumnDef="id_number">
+            <th mat-header-cell *matHeaderCellDef>პ. ნომერი</th>
+            <td mat-cell *matCellDef="let element">{{ element.id_number }}</td>
           </ng-container>
 
-          <!-- Weight Column -->
-          <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef>Weight</th>
-            <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+          <ng-container matColumnDef="birthday">
+            <th mat-header-cell *matHeaderCellDef>დაბ. დღე</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.birthday | date: 'mediumDate' }}
+            </td>
           </ng-container>
 
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="symbol">
-            <th mat-header-cell *matHeaderCellDef>Symbol</th>
-            <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
+          <ng-container matColumnDef="branch">
+            <th mat-header-cell *matHeaderCellDef>ფილიალი</th>
+            <td mat-cell *matCellDef="let element">{{ element.branch }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef>მისამართი</th>
+            <td mat-cell *matCellDef="let element">{{ element.address }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="disease">
+            <th mat-header-cell *matHeaderCellDef>დაავადება</th>
+            <td mat-cell *matCellDef="let element">{{ element.disease }}</td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
+
+        <mat-paginator
+          [length]="listLength"
+          [pageSize]="paging.take"
+          [pageIndex]="paging.page"
+          [pageSizeOptions]="[10, 20, 30, 50]"
+          (page)="handlePageChange($event)"
+        ></mat-paginator>
       </mat-card-content>
     </mat-card>
   </div>
