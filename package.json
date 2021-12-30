@@ -29,6 +29,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.0.2",
     "@nrwl/angular": "13.4.1",
+    "mat-timepicker": "^5.1.4",
     "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.4.0",

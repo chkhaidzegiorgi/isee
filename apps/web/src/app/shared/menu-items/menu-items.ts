@@ -9,6 +9,7 @@ export interface Menu {
 }
 
 const MENUITEMS = [
+  { state: 'visits', name: 'ვიზიტები', type: 'link', icon: 'av_timer' },
   { state: 'patients', name: 'პაციენტები', type: 'link', icon: 'av_timer' },
 ];
 

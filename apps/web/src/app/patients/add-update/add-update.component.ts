@@ -56,7 +56,7 @@ export class AddUpdateComponent implements OnInit {
       .subscribe(
         (x: any) => {
           console.log(x);
-          this.router.navigate(['./']);
+          this.router.navigate(['./patients']);
           this.snakBack.open('მონაცემები წარმატებით შეინახა', 'დახურვა');
         },
         (error) => {

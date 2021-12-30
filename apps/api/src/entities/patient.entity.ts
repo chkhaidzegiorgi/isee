@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { VisitEntity } from './visit.entity';
 
 @Entity('patients')
 export class PatientEntity {
@@ -21,7 +23,7 @@ export class PatientEntity {
   id_number: string;
 
   @Column({ type: 'timestamptz' })
-  birthday: Date;
+  birthday?: Date;
 
   @Column()
   address?: string;
@@ -40,4 +42,7 @@ export class PatientEntity {
 
   @Column()
   updated_by?: string;
+
+  @OneToMany(() => VisitEntity, (visit: VisitEntity) => visit.patient)
+  public visits: VisitEntity[];
 }

@@ -11,7 +11,10 @@ export class PatientsService {
 
   getList(
     searchValue: string,
-    paging: Paging
+    paging: Paging = {
+      page: 0,
+      take: 10,
+    }
   ): Observable<ListResult<Patient>> {
     const params = new UrlQueryParams({
       searchValue,

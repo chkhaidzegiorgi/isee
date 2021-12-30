@@ -1,14 +1,15 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewEncapsulation,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
-import { Paging, Patient } from '@isee/api-interfaces';
+import { Paging, Visit } from '@isee/api-interfaces';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
-import { PatientsService } from '../patients.service';
+import { VisitsService } from '../visits.service';
 
 @Component({
   selector: 'isee-list',
@@ -29,25 +30,20 @@ export class ListComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
     'fullname',
-    'id_number',
-    'birthday',
-    'branch',
-    'address',
-    'disease',
+    'doctorName',
+    'price',
+    'date',
   ];
-  list: Patient[] = [];
+  list: Visit[] = [];
 
-  constructor(
-    private service: PatientsService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private service: VisitsService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.listenFilter();
     this.load();
   }
 
-  load() {
+  load(): void {
     this.service.getList(this.searchValue, this.paging).subscribe((res) => {
       this.list = res.records;
       this.listLength = res.count;

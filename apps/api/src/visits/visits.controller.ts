@@ -9,15 +9,15 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { PatientsService } from './patients.service';
+import { VisitsService } from './visits.service';
 
-@Controller('patients')
-export class PatientsController {
-  constructor(private service: PatientsService) {}
+@Controller('visits')
+export class VisitsController {
+  constructor(private service: VisitsService) {}
 
   @Get()
   async getList(@Query() query) {
-    return await this.service.getPatients(query);
+    return await this.service.getList(query);
   }
 
   @Get('/:id')

@@ -3,10 +3,14 @@ import { PatientsModule } from '../patients/patients.module';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { VisitsModule } from '../visits/visits.module';
+import { DoctorsModule } from '../doctors/doctors.module';
 
 @Module({
   imports: [
+    DoctorsModule,
     PatientsModule,
+    VisitsModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       url: process.env.DATABASE_URL,
@@ -14,7 +18,7 @@ import { ConfigModule } from '@nestjs/config';
       ssl: {
         rejectUnauthorized: false,
       },
-      entities: ['dist/**/*.entity{.ts,.js}'],
+      entities: [],
       synchronize: true, // This for development
       autoLoadEntities: true,
     }),

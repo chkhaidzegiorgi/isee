@@ -1,0 +1,89 @@
+<mat-card>
+  <mat-card-content>
+    <div class="d-flex flex-wrap">
+      <mat-card-title>ვიზიტის დამატება</mat-card-title>
+    </div>
+    <div>
+      <form *ngIf="form" [formGroup]="form">
+        <mat-form-field>
+          <mat-label>აირჩიეთ ექიმი</mat-label>
+          <mat-select required="" formControlName="doctorId">
+            <mat-option
+              *ngFor="let doctor of doctors$ | async"
+              [value]="doctor.id"
+            >
+              {{ doctor.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>აირჩიეთ პაციენტი</mat-label>
+
+          <input
+            type="text"
+            matInput
+            formControlName="patient"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete
+            autoActiveFirstOption
+            [displayWith]="displayFn"
+            #auto="matAutocomplete"
+          >
+            <mat-option *ngFor="let patient of patients" [value]="patient">
+              {{ patient.firstname + ' ' + patient.lastname }}({{
+                patient.id_number
+              }})
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            formControlName="price"
+            matInput
+            type="number"
+            placeholder="ფასი"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            formControlName="visit_date"
+            matInput
+            placeholder="ვიზიტის დრო"
+            [matDatepicker]="picker"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            formControlName="visit_time"
+            matInput
+            placeholder="ვიზიტის დრო"
+            matTimepicker
+          />
+        </mat-form-field>
+
+        <div>
+          <button
+            [disabled]="form.invalid"
+            (click)="onSave()"
+            mat-raised-button
+            color="accent"
+          >
+            შენახვა
+          </button>
+        </div>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>
