@@ -28,6 +28,7 @@ export class ListComponent implements OnInit {
   listLength = 0;
 
   displayedColumns: string[] = [
+    'id',
     'fullname',
     'id_number',
     'birthday',
