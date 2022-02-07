@@ -11,6 +11,7 @@ export interface Menu {
 const MENUITEMS = [
   { state: 'visits', name: 'ვიზიტები', type: 'link', icon: 'av_timer' },
   { state: 'patients', name: 'პაციენტები', type: 'link', icon: 'av_timer' },
+  { state: 'reports', name: 'რეპორტი', type: 'link', icon: 'av_timer' },
 ];
 
 @Injectable()

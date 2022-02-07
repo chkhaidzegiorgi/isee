@@ -1,0 +1,19 @@
+<mat-card>
+  <mat-card-content>
+    <div class="d-flex flex-wrap">
+      <div>
+        <mat-card-title>შემოსავალი ექიმების მიხედვით</mat-card-title>
+      </div>
+    </div>
+
+    <div class="barchrt" style="height: 360px">
+      <canvas
+        baseChart
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [type]="barChartType"
+      >
+      </canvas>
+    </div>
+  </mat-card-content>
+</mat-card>

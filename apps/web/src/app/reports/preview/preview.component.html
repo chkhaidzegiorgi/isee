@@ -1,0 +1,44 @@
+<!-- ============================================================== -->
+<!-- Simple four boxes Row -->
+<!-- ============================================================== -->
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <div class="d-flex flex-wrap" fxFlex="100">
+          <div>
+            <mat-card-title>აირჩიეთ თარიღი</mat-card-title>
+          </div>
+        </div>
+
+        <mat-select fxFlex.gt-md="25" placeholder="წელი">
+          <mat-option [value]="year" *ngFor="let year of years">
+            {{ year }}
+          </mat-option>
+        </mat-select>
+        <mat-select fxFlex.gt-md="25" placeholder="საწყისი თვე">
+          <mat-option [value]="cur" *ngFor="let cur of month">
+            {{ cur }}
+          </mat-option>
+        </mat-select>
+
+        <mat-select fxFlex.gt-md="25" placeholder="საბოლოო თვე">
+          <mat-option [value]="cur" *ngFor="let cur of month">
+            {{ cur }}
+          </mat-option>
+        </mat-select>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- column -->
+  <div fxFlex.gt-lg="66" fxFlex.gt-md="66" fxFlex.gt-xs="100" fxFlex="100">
+    <isee-sales-overview [barChartData]="salesChartData"></isee-sales-overview>
+  </div>
+  <!-- column -->
+  <!-- column -->
+  <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+    <isee-sales-by-doctor></isee-sales-by-doctor>
+  </div>
+  <!-- column -->
+</div>
