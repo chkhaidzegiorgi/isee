@@ -11,18 +11,30 @@
           </div>
         </div>
 
-        <mat-select fxFlex.gt-md="25" placeholder="წელი">
+        <mat-select
+          fxFlex.gt-md="25"
+          placeholder="წელი"
+          (selectionChange)="onYearChange($event)"
+        >
           <mat-option [value]="year" *ngFor="let year of years">
             {{ year }}
           </mat-option>
         </mat-select>
-        <mat-select fxFlex.gt-md="25" placeholder="საწყისი თვე">
+        <mat-select
+          fxFlex.gt-md="25"
+          (selectionChange)="onStartMonthChange($event)"
+          placeholder="საწყისი თვე"
+        >
           <mat-option [value]="cur" *ngFor="let cur of month">
             {{ cur }}
           </mat-option>
         </mat-select>
 
-        <mat-select fxFlex.gt-md="25" placeholder="საბოლოო თვე">
+        <mat-select
+          fxFlex.gt-md="25"
+          (selectionChange)="onEndMonthChange($event)"
+          placeholder="საბოლოო თვე"
+        >
           <mat-option [value]="cur" *ngFor="let cur of month">
             {{ cur }}
           </mat-option>
@@ -38,7 +50,7 @@
   <!-- column -->
   <!-- column -->
   <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
-    <isee-sales-by-doctor></isee-sales-by-doctor>
+    <isee-sales-by-doctor [pieChartData]="pieChartData"></isee-sales-by-doctor>
   </div>
   <!-- column -->
 </div>

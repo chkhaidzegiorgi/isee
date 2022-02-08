@@ -16,7 +16,7 @@ import { ReportsService } from '../reports.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PreviewComponent implements OnInit {
-  years = [2021, 2022, 2023, 2024];
+  years = [2022];
   month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   public get startMonth(): number {
@@ -32,6 +32,7 @@ export class PreviewComponent implements OnInit {
   }
 
   currentDate = new Date();
+
   endDate: Date = new Date(
     this.currentDate.getFullYear(),
     this.currentDate.getMonth() + 1,
@@ -44,6 +45,8 @@ export class PreviewComponent implements OnInit {
   );
 
   salesChartData: any;
+  pieChartData: any;
+  doctors: Doctor[] = [];
 
   constructor(
     private service: ReportsService,
@@ -52,15 +55,83 @@ export class PreviewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.populateYears();
     combineLatest(
       this.service.getByMonth(this.startDate, this.endDate),
       this.doctorService.getList()
     ).subscribe(([reports, doctors]) => {
-      this.populateReport(reports, doctors);
+      this.doctors = doctors;
+      this.populateReport(reports);
     });
   }
 
-  populateReport(reports: ReportByMonth[], doctors: Doctor[]) {
+  populateYears(): void {
+    const currYear = this.currentDate.getFullYear();
+    const startYear = this.years[0];
+    if (currYear > startYear) {
+      for (let i = startYear; i <= currYear; i++) {
+        this.years.push(i);
+      }
+    }
+  }
+
+  fetchReport(): void {
+    this.service
+      .getByMonth(this.startDate, this.endDate)
+      .subscribe((reports) => {
+        this.populateReport(reports);
+      });
+  }
+
+  onYearChange(event: any): void {
+    const { value } = event;
+    this.startDate.setFullYear(value);
+    this.endDate.setFullYear(value);
+    this.fetchReport();
+  }
+
+  onStartMonthChange(event: any): void {
+    const { value } = event;
+    this.startDate.setMonth(value - 1);
+    this.fetchReport();
+  }
+  onEndMonthChange(event: any): void {
+    const { value } = event;
+    this.endDate.setMonth(value - 1);
+    this.fetchReport();
+  }
+
+  populateReport(reports: ReportByMonth[]) {
+    this.calculateSums(reports);
+    this.calculateSales(reports);
+    this.cdr.markForCheck();
+  }
+
+  calculateSums(reports: ReportByMonth[]): void {
+    const labels: any[] = [];
+    const data: any[] = [];
+
+    this.doctors.forEach((doctor) => {
+      const sum = reports
+        .filter((r) => r.visit_doctorId === doctor.id)
+        .reduce((prev, curr) => {
+          return prev + Number(curr.sumPrice);
+        }, 0);
+      labels.push(`${doctor.name}`);
+      data.push(sum);
+    });
+    this.pieChartData = {
+      labels: labels,
+      datasets: [
+        {
+          data: data,
+        },
+      ],
+    };
+    console.log(this.pieChartData);
+  }
+
+  calculateSales(reports: ReportByMonth[]): void {
     const reportArray: any[] = [];
     const labels = [];
 
@@ -68,14 +139,17 @@ export class PreviewComponent implements OnInit {
       labels.push(`${month}/${this.selectedYear}`);
     }
 
-    doctors.forEach((doctor) => {
+    this.doctors.forEach((doctor) => {
       const label = doctor.name;
       const data = [];
       for (let month = this.startMonth; month <= this.endMonth; month++) {
-        const selectedReport = reports.find(
-          (x) => +x.month === month && x.visit_doctorId === doctor.id
-        );
-        data.push(selectedReport ? +selectedReport.sumPrice : 0);
+        const selectedReportSum = reports
+          .filter((x) => +x.month === month && x.visit_doctorId === doctor.id)
+          .reduce((prev, curr) => {
+            return prev + Number(curr.sumPrice);
+          }, 0);
+        data.push(selectedReportSum);
+        console.log(selectedReportSum);
       }
       reportArray.push({
         label,
@@ -86,6 +160,5 @@ export class PreviewComponent implements OnInit {
       labels,
       datasets: reportArray,
     };
-    this.cdr.markForCheck();
   }
 }
