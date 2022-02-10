@@ -31,9 +31,6 @@ export class PatientEntity {
   @Column()
   disease?: string;
 
-  @Column()
-  branch: string;
-
   @CreateDateColumn()
   created_at: Date;
 

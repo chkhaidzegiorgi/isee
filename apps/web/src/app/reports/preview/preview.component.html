@@ -25,8 +25,8 @@
           (selectionChange)="onStartMonthChange($event)"
           placeholder="საწყისი თვე"
         >
-          <mat-option [value]="cur" *ngFor="let cur of month">
-            {{ cur }}
+          <mat-option [value]="cur.value" *ngFor="let cur of month">
+            {{ cur.text }}
           </mat-option>
         </mat-select>
 
@@ -35,10 +35,21 @@
           (selectionChange)="onEndMonthChange($event)"
           placeholder="საბოლოო თვე"
         >
-          <mat-option [value]="cur" *ngFor="let cur of month">
-            {{ cur }}
+          <mat-option [value]="cur.value" *ngFor="let cur of month">
+            {{ cur.text }}
           </mat-option>
         </mat-select>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="par-cards">
+    <mat-card *ngFor="let doctor of displayData">
+      <mat-card-content>
+        <b>{{ doctor.name }}</b> <br />
+        თანხა: <b>{{ doctor.sum }}ლ</b> <br />
+
+        პაციენტების რაოდენობა:<b> {{ doctor.patientCount }}</b>
       </mat-card-content>
     </mat-card>
   </div>

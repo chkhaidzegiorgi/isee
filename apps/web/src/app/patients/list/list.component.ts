@@ -31,7 +31,6 @@ export class ListComponent implements OnInit {
     'fullname',
     'id_number',
     'birthday',
-    'branch',
     'address',
     'disease',
   ];

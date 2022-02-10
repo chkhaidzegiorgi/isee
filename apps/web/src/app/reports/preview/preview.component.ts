@@ -17,7 +17,56 @@ import { ReportsService } from '../reports.service';
 })
 export class PreviewComponent implements OnInit {
   years = [2022];
-  month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  month: { text: string; value: number }[] = [
+    {
+      text: 'იანვარი',
+      value: 1,
+    },
+    {
+      text: 'თებერვალი',
+      value: 2,
+    },
+    {
+      text: 'მარტი',
+      value: 3,
+    },
+    {
+      text: 'აპრილი',
+      value: 4,
+    },
+    {
+      text: 'მაისი',
+      value: 5,
+    },
+    {
+      text: 'ივნისი',
+      value: 6,
+    },
+    {
+      text: 'ივლისი',
+      value: 7,
+    },
+    {
+      text: 'აგვისტო',
+      value: 8,
+    },
+    {
+      text: 'სექტემბერი',
+      value: 9,
+    },
+    {
+      text: 'ოქტომბერი',
+      value: 10,
+    },
+    {
+      text: 'ნოემბერი',
+      value: 11,
+    },
+    {
+      text: 'დეკემბერი',
+      value: 12,
+    },
+  ];
 
   public get startMonth(): number {
     return this.startDate.getMonth() + 1;
@@ -44,6 +93,7 @@ export class PreviewComponent implements OnInit {
     1
   );
 
+  displayData: { name: string; sum: number; patientCount: number }[] = [];
   salesChartData: any;
   pieChartData: any;
   doctors: Doctor[] = [];
@@ -110,16 +160,26 @@ export class PreviewComponent implements OnInit {
   calculateSums(reports: ReportByMonth[]): void {
     const labels: any[] = [];
     const data: any[] = [];
+    this.displayData = [];
 
     this.doctors.forEach((doctor) => {
+      let patientCount = 0;
       const sum = reports
         .filter((r) => r.visit_doctorId === doctor.id)
         .reduce((prev, curr) => {
+          patientCount += Number(curr.patientCount);
           return prev + Number(curr.sumPrice);
         }, 0);
+
+      this.displayData.push({
+        name: doctor.name,
+        sum,
+        patientCount,
+      });
       labels.push(`${doctor.name}`);
       data.push(sum);
     });
+
     this.pieChartData = {
       labels: labels,
       datasets: [

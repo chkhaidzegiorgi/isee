@@ -12,7 +12,6 @@ export class AddUpdateFormBuilder {
       lastname: [patient ? patient.lastname : '', Validators.required],
       birthday: [patient ? patient.birthday : '', Validators.required],
       id_number: [patient ? patient.id_number : '', Validators.required],
-      branch: [patient ? patient.branch : '', Validators.required],
       address: [patient ? patient.address : ''],
       disease: [patient ? patient.disease : ''],
     });

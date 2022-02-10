@@ -3,4 +3,5 @@ export interface ReportByMonth {
   year: number;
   month: number;
   sumPrice: number;
+  patientCount: number;
 }

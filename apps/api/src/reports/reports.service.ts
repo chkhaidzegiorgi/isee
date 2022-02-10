@@ -21,6 +21,7 @@ export class ReportsService {
       .addSelect("TO_CHAR (visit.visit_date, 'YYYY')", 'year')
       .addSelect("TO_CHAR (visit.visit_date, 'mm')", 'month')
       .addSelect('SUM(visit.price)', 'sumPrice')
+      .addSelect('COUNT(visit.doctorId)', 'patientCount')
       .where('visit.visit_date > :start_at', { start_at: startDate })
       .andWhere('visit.visit_date < :end_at', { end_at: endDate })
       .groupBy('visit.doctorId')
